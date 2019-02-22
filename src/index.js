@@ -1,34 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import connect from './model/connection';
+
+import State from './model/state';
 
 import './css/main.css';
 import { Bg, Page, Title, Section, Label, InfoLabel, Button, Footer } from './core';
+import WelcomeView from './views/welcome';
+import ChatView from './views/chat';
 
 class View extends React.Component {
+
     constructor(props) {
         super(props);
+
         this.state = {
-            info: ""
+            info: "",
+            status: State.Welcome,
+            chat: "-----"
         };
 
-        this.setInfo = this.setInfo.bind(this);
-        this.connectClicked = this.connectClicked.bind(this);
-        this.connectionCallback = this.connectionCallback.bind(this);
+        this.setConnected = this.setConnected.bind(this);
     }
 
-    setInfo(newValue) {
-        this.setState({ info: newValue });
-    }
-
-    connectClicked(sender) {
-        this.setInfo("Loading...");
-        let self = this;
-        connect(this.connectionCallback);
-    }
-
-    connectionCallback() {
-        this.setInfo("Success!");
+    setConnected() {
+        this.setState({ status: State.Connected });
     }
 
     render() {
@@ -37,16 +32,23 @@ class View extends React.Component {
                 <Bg />
                 <Page>
                     <Title>RENADE RP</Title>
-                    <Section>
-                        <Label>Development in progress</Label>
-                        <Label>You can join the chat and ask any question</Label>
-                        <Button click={this.connectClicked}>Connect</Button>
-                        <Label>{this.state.info}</ Label>
-                    </Section>
+                    <CurrentView status={this.state.status} forward={this.setConnected} />
                 </Page>        
                 <Footer />
             </div>
         );
+    }
+
+}
+
+class CurrentView extends React.Component {
+
+    render() {
+        switch (this.props.status) {
+            case State.Welcome: return <WelcomeView forward={this.props.forward} />;
+            case State.Connected: return <ChatView />;
+            default: return <Section />;
+        }
     }
 
 }
