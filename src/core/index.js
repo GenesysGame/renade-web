@@ -3,7 +3,7 @@ import _Page from './page';
 import _Title from './title';
 import _Section from './section';
 import _Label from './label';
-import _InfoLabel from './infolabel';
+import _TextView from './textview';
 import _Button from './button';
 import _Footer from './footer';
 
@@ -12,6 +12,6 @@ export const Page = _Page;
 export const Title = _Title;
 export const Section = _Section;
 export const Label = _Label;
-export const InfoLabel = _InfoLabel;
+export const TextView = _TextView;
 export const Button = _Button;
 export const Footer = _Footer;

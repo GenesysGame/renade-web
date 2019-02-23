@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import State from './model/state';
 
 import './css/main.css';
-import { Bg, Page, Title, Section, Label, InfoLabel, Button, Footer } from './core';
+import { Bg, Page, Title, Section, Footer } from './core';
 import WelcomeView from './views/welcome';
 import ChatView from './views/chat';
 
@@ -15,8 +15,7 @@ class View extends React.Component {
 
         this.state = {
             info: "",
-            status: State.Welcome,
-            chat: "-----"
+            status: State.Welcome
         };
 
         this.setConnected = this.setConnected.bind(this);

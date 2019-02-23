@@ -1,5 +1,5 @@
 import React from 'react';
-import connect from '../model/connection';
+import IO from '../model/io';
 
 import { Section, Label, Button } from '../core';
 
@@ -35,7 +35,7 @@ export default class WelcomeView extends React.Component {
 
     connectClicked(sender) {
         this.setInfo("Loading...");
-        connect(this.connectionCallback);
+        IO.connect(this.connectionCallback);
     }
 
     connectionCallback() {

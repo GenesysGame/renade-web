@@ -36,7 +36,8 @@
 
 .section {
     text-align: center;
-    margin: 10px;
+    margin: 10px auto;
+    max-width: 1024px;
 }
 
 .label {
@@ -53,6 +54,44 @@
     margin: 10px;
     display: inline-block;
     cursor: pointer;
+}
+
+.textview {
+    width: 100%;
+    height: 160px;
+    border: none;
+    font-family: 'London';
+    font-size: medium;
+    color: white;
+    text-align: left;
+    word-wrap: break-word;
+    background: rgba(0, 0, 0, 0);
+    resize: none;
+    text-shadow: -1px -1px 0 #000,  
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+}
+
+.chatform {
+    text-align: left;
+}
+
+.chatform>input {
+    width: 100%;
+    border: solid 1px black;
+    color: white;
+    background: rgba(0, 0, 0, 0);
+    font-family: 'London';
+    font-size: medium;
+    text-shadow: -1px -1px 0 #000,  
+                1px -1px 0 #000,
+                -1px 1px 0 #000,
+                1px 1px 0 #000;
+}
+
+.chatform>input:focus {
+    outline: none;
 }
 
 /* Footer styles */
