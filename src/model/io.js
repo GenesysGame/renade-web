@@ -1,12 +1,13 @@
 import io from 'socket.io-client';
+import config from '../config.json';
  
 // Создаем текст сообщений для событий
 let strings = {
 	'connected': '%time%: Вы успешно соединились к сервером как %name%.',
-	'userJoined': '[sys][time]%time%[/time]: Пользователь [user]%name%[/user] присоединился к чату.[/sys]',
+	'userJoined': '%time%: Пользователь %name% присоединился к чату.',
 	'messageSent': '%time%: %name%: %text%',
-	'messageReceived': '[in][time]%time%[/time]: [user]%name%[/user]: %text%[/in]',
-	'userSplit': '[sys][time]%time%[/time]: Пользователь [user]%name%[/user] покинул чат.[/sys]'
+	'messageReceived': '%time%: %name%: %text%',
+	'userSplit': '%time%: Пользователь %name% покинул чат.'
 };
 
 class IO {
@@ -26,7 +27,8 @@ class IO {
             callback();
             return;
         }
-        this.socket = io.connect('http://localhost:8081');
+        let address = config.host + ':' + config.port;
+        this.socket = io.connect(address);
         let self = this;
         this.socket.on('connect', function() {
             self.socket.on('message', self.messageReceived);
