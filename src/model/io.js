@@ -1,14 +1,5 @@
 import io from 'socket.io-client';
 import config from '../config.json';
- 
-// Создаем текст сообщений для событий
-let strings = {
-	'connected': '%time%: Вы успешно соединились к сервером как %name%.',
-	'userJoined': '%time%: Пользователь %name% присоединился к чату.',
-	'messageSent': '%time%: %name%: %text%',
-	'messageReceived': '%time%: %name%: %text%',
-	'userSplit': '%time%: Пользователь %name% покинул чат.'
-};
 
 class IO {
 
@@ -17,7 +8,7 @@ class IO {
         this.isConnected = false;
         this.observers = [];
 
-        this.messageReceived = this.messageReceived.bind(this);
+        this.eventReceived = this.eventReceived.bind(this);
     }
 
     // MARK: Connection
@@ -31,7 +22,7 @@ class IO {
         this.socket = io.connect(address);
         let self = this;
         this.socket.on('connect', function() {
-            self.socket.on('message', self.messageReceived);
+            self.socket.on('message', self.eventReceived);
             self.isConnected = true;
             callback();
         });
@@ -44,10 +35,8 @@ class IO {
         this.post('Disconnected!');
     }
 
-    messageReceived(msg) {
-        let string = strings[msg.event].replace('%time%', msg.time).replace('%name%', msg.name).replace('%text%', msg.text);
-        if (!string) return;
-        this.post(string);
+    eventReceived(msg) {
+        this.post(msg);
     }
 
     // MARK: Observers
@@ -68,6 +57,12 @@ class IO {
         this.observers.forEach(observer => {
             observer.push(message);
         })
+    }
+
+    // MARK: Send event to the server
+
+    send(e) {
+        this.socket.send(e);
     }
 
 }
